@@ -9,7 +9,7 @@ enc_str_arr.each do |enc_hex|
 end
 
 
-def fixed_xor(dec_str1, letter)
+def fixed_xor(dec_str1, char)
 
   result =""
 
@@ -17,7 +17,7 @@ def fixed_xor(dec_str1, letter)
 
   for i in 0..(dec_str1.length-1)
 
-    result << (dec_str1[i].bytes.first ^ letter.bytes.first)
+    result << (dec_str1[i].bytes.first ^ char.bytes.first)
 
     if result[-1] =~ /[a-z]/
       letter_count += 1
@@ -28,7 +28,7 @@ def fixed_xor(dec_str1, letter)
 end
 
 
-letter_map = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
+char_map = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
 
 solution_list = {}
 
@@ -36,7 +36,7 @@ all_solutions=[]
 
 dec_str_arr.each_with_index do |dec_hex, index|
 
-  letter_map.each do |letter|
+  char_map.each do |letter|
 
     possible_solution = fixed_xor(dec_hex, letter)
 
