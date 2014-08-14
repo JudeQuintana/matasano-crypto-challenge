@@ -13,18 +13,18 @@ def fixed_xor(dec_str1, char)
 
   result =""
 
-  letter_count = 0
+  char_count = 0
 
   for i in 0..(dec_str1.length-1)
 
     result << (dec_str1[i].bytes.first ^ char.bytes.first)
 
     if result[-1] =~ /[a-z]/
-      letter_count += 1
+      char_count += 1
     end
   end
 
-  [letter_count, result]
+  [char_count, result]
 end
 
 
@@ -38,9 +38,8 @@ dec_str_arr.each_with_index do |dec_hex, index|
 
   char_map.each do |letter|
 
-    possible_solution = fixed_xor(dec_hex, letter)
+    solution_list[letter] = fixed_xor(dec_hex, letter)
 
-    solution_list[letter] = possible_solution
   end
 
   all_solutions.push(index, solution_list.sort_by { |k, v| v[0] }.reverse.first)
