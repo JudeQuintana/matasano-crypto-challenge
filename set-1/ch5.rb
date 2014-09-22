@@ -7,7 +7,7 @@ I go crazy when I hear a cymbal"
 
 key = 'ICE'
 
-def fixed_xor(dec_str1, keys)
+def repeating_key_xor(dec_str1, keys)
 
   result =""
   k = 0
@@ -29,5 +29,5 @@ def fixed_xor(dec_str1, keys)
   result
 end
 
-pp fixed_xor(str, key)
+pp repeating_key_xor(str, key)
 

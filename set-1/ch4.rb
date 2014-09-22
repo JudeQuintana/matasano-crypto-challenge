@@ -9,7 +9,7 @@ enc_str_arr.each do |enc_hex|
 end
 
 
-def fixed_xor(dec_str1, char)
+def detect_single_char_xor(dec_str1, char)
 
   result =""
 
@@ -38,7 +38,7 @@ dec_str_arr.each_with_index do |dec_hex, index|
 
   char_map.each do |letter|
 
-    solution_list[letter] = fixed_xor(dec_hex, letter)
+    solution_list[letter] = detect_single_char_xor(dec_hex, letter)
 
   end
 
