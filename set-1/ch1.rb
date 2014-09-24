@@ -4,7 +4,6 @@ class Hex2Base64Digest
 
   def initialize(encoded_string)
     @enc_str = encoded_string
-
   end
 
   def convert
