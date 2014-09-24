@@ -2,8 +2,8 @@
 
 class Hex2Base64Digest
 
-  def initialize(encoded_string)
-    @enc_str = encoded_string
+  def initialize(hex_encoded_string)
+    @enc_str = hex_encoded_string
   end
 
   def convert
