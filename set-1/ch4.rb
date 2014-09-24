@@ -1,49 +1,22 @@
-# http://cryptopals.com/sets/1/challenges/4/
-require 'pp'
+require_relative 'ch3'
 
-enc_str_arr = File.read("4.txt").split("\n")
-dec_str_arr = []
+class BruteForceHexList
+  attr_reader :enc_hex_list_arr
 
-enc_str_arr.each do |enc_hex|
-  dec_str_arr.push([enc_hex].pack("H*"))
-end
+  def initialize(hex_file_list)
+    @enc_hex_list_arr = hex_file_list.split("\n")
+  end
 
+  def build_solution_hash
 
-def detect_single_char_xor(dec_str1, char)
+    solution_list = {}
 
-  result =""
-
-  char_count = 0
-
-  for i in 0..(dec_str1.length-1)
-
-    result << (dec_str1[i].bytes.first ^ char.bytes.first)
-
-    if result[-1] =~ /[a-z]/
-      char_count += 1
+    @enc_hex_list_arr.each_with_index do |enc_hex, index|
+      solution_list[index] = SingleByteXOR.new(enc_hex).decrypt_msg
     end
+
+    solution_list
   end
 
-  [char_count, result]
-end
-
-
-char_map = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
-
-solution_list = {}
-
-all_solutions=[]
-
-dec_str_arr.each_with_index do |dec_hex, index|
-
-  char_map.each do |letter|
-
-    solution_list[letter] = detect_single_char_xor(dec_hex, letter)
-
-  end
-
-  all_solutions.push(index, solution_list.sort_by { |k, v| v[0] }.reverse.first)
 
 end
-
-pp all_solutions
