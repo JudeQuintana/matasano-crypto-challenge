@@ -1,25 +1,25 @@
 # http://cryptopals.com/sets/1/challenges/2/
 
-hex_str1 = "1c0111001f010100061a024b53535009181c"
+class FixedXOR
 
-hex_str2 = "686974207468652062756c6c277320657965"
+  def initialize(encoded_string_1, encoded_string_2)
+    @enc_str_1 = encoded_string_1
+    @enc_str_2 = encoded_string_2
 
-decoded_str1 = [hex_str1].pack("H*")
-
-decoded_str2 = [hex_str2].pack("H*")
-
-
-def fixed_xor(dec_str1, dec_str2)
-
-  result =""
-
-  for i in 0..(dec_str1.length-1)
-    result << (dec_str1[i].bytes.first ^ dec_str2[i].bytes.first).to_s(16)
+    raise ArgumentError, "Strings are not of the same length!" if @enc_str_1.length != @enc_str_2.length
   end
 
-  result
+  def xor_combo
+    decoded_string_1 = [@enc_str_1].pack("H*")
+    decoded_string_2 = [@enc_str_2].pack("H*")
+
+    result =""
+
+    for i in 0..(decoded_string_1.length-1)
+      result << (decoded_string_1[i].bytes.first ^ decoded_string_2[i].bytes.first).to_s(16)
+    end
+
+    result
+  end
 
 end
-
-puts "result"
-p fixed_xor(decoded_str1,decoded_str2)
