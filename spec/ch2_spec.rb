@@ -7,6 +7,6 @@ describe FixedXOR do
 
     xor_combination = "746865206b696420646f6e277420706c6179"
 
-    expect(FixedXOR.new(hex_str1,hex_str2).xor_combo).to eq(xor_combination)
+    expect(FixedXOR.new(hex_str1,hex_str2).encrypt_msg_with_xor).to eq(xor_combination)
   end
 end
