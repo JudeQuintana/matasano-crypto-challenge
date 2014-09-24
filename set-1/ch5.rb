@@ -1,33 +1,30 @@
 # http://cryptopals.com/sets/1/challenges/5/
+class RepeatingKeyXOR
 
-require 'pp'
-
-str = "Burning 'em, if you ain't quick and nimble
-I go crazy when I hear a cymbal"
-
-key = 'ICE'
-
-def repeating_key_xor(dec_str1, keys)
-
-  result =""
-  k = 0
-
-  for i in 0..(dec_str1.length-1)
-
-    if k > keys.length-1
-      k=0
-    end
-
-    xord = (dec_str1[i].bytes.first ^ keys[k].bytes.first)
-
-    result << sprintf('%02x', xord)
-
-    k+=1
-
+  def initialize(msg,key)
+    @msg = msg
+    @key = key
   end
 
-  result
+  def encrypt_msg
+    encrypted_str =""
+    k = 0
+
+    for i in 0..(@msg.length-1)
+
+      if k > @key.length-1
+        k=0
+      end
+
+      #need to keep leading zero when inserting hex into string
+      encrypted_str << sprintf('%02x', (@msg[i].bytes.first ^ @key[k].bytes.first))
+
+      k+=1
+    end
+
+    encrypted_str
+  end
+
 end
 
-pp repeating_key_xor(str, key)
 
