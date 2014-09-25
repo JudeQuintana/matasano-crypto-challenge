@@ -39,7 +39,9 @@ describe DetectSingleCharXOR do
   it "iterate through hex list" do
     hex_list_file_path = File.expand_path('../../lib/set-1/4.txt', __FILE__)
 
-    list = DetectSingleCharXOR.new(File.read(hex_list_file_path))
+    potential_keys_arr = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
+
+    list = DetectSingleCharXOR.new(File.read(hex_list_file_path), potential_keys_arr)
 
     solultion_hash = list.build_solution_hash
 
