@@ -9,7 +9,7 @@ class FixedXOR
     raise ArgumentError, "Strings are not of the same length!" if @msg_hex_str.length != @key_hex_str.length
   end
 
-  def encrypt_msg_with_xor
+  def encrypt_msg
     msg_bin_string = decode_hex(@msg_hex_str)
     key_bin_string = decode_hex(@key_hex_str)
 
