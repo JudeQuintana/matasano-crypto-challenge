@@ -26,7 +26,7 @@ describe SingleByteXOR do
   it "Find the key, decrypt the message assuming it was encrypted with a single char" do
     hex_str = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
 
-    potential_keys_arr = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
+    potential_keys_arr = ('A'..'Z').to_a + ('a'..'z').to_a
 
     key_letterfreq_msg = ["X", 24, "Cooking MC's like a pound of bacon"]
 
@@ -39,7 +39,7 @@ describe DetectSingleCharXOR do
   it "iterate through hex list" do
     hex_list_file_path = File.expand_path('../../lib/set-1/4.txt', __FILE__)
 
-    potential_keys_arr = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
+    potential_keys_arr = ('0'..'9').to_a
 
     list = DetectSingleCharXOR.new(File.read(hex_list_file_path), potential_keys_arr)
 
