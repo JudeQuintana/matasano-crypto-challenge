@@ -1,6 +1,7 @@
+# http://cryptopals.com/sets/1/challenges/4/
 require_relative 'ch3'
 
-class BruteForceHexList
+class DetectSingleCharXOR
   attr_reader :enc_hex_list_arr
 
   def initialize(hex_file_list)
