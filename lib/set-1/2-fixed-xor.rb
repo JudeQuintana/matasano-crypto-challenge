@@ -10,8 +10,8 @@ class FixedXOR
   end
 
   def encrypt_msg_with_xor
-    msg_bin_string = hex_to_bin(@msg_hex_str)
-    key_bin_string = hex_to_bin(@key_hex_str)
+    msg_bin_string = decode_hex(@msg_hex_str)
+    key_bin_string = decode_hex(@key_hex_str)
 
     xor_result =""
 
@@ -24,7 +24,7 @@ class FixedXOR
 
   private
 
-  def hex_to_bin(hex_string)
+  def decode_hex(hex_string)
     [hex_string].pack("H*")
   end
 
