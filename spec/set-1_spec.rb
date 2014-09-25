@@ -8,6 +8,7 @@ describe Hex2Base64Digest do
 
     expect(Hex2Base64Digest.new(hex_string).convert).to eq(base64_string)
   end
+  
 end
 
 describe FixedXOR do
@@ -16,10 +17,14 @@ describe FixedXOR do
 
     msg_hex_str = "686974207468652062756c6c277320657965"
 
-    xor_combination = "746865206b696420646f6e277420706c6179"
+    encrypted_hex_str = "746865206b696420646f6e277420706c6179"
 
-    expect(FixedXOR.new(msg_hex_str, key_hex_str).encrypt_msg).to eq(xor_combination)
+    expect(FixedXOR.new(msg_hex_str, key_hex_str).encrypt_msg).to eq(encrypted_hex_str)
+
+    #decrypt msg
+    expect(FixedXOR.new(encrypted_hex_str, key_hex_str).encrypt_msg).to eq(msg_hex_str)
   end
+
 end
 
 describe SingleByteXOR do
@@ -32,7 +37,6 @@ describe SingleByteXOR do
 
     expect(SingleByteXOR.new(hex_str, potential_keys_arr).decrypt_msg).to eq(key_letterfreq_msg)
   end
-
 end
 
 describe DetectSingleCharXOR do
@@ -49,6 +53,7 @@ describe DetectSingleCharXOR do
 
     expect(solultion_hash.has_value?(key_charfreq_msg)).to eq(true)
   end
+
 end
 
 
@@ -70,7 +75,7 @@ describe BreakRepeatKeyXOR do
     text1 = "this is a test"
 
     text2 = "wokka wokka!!!"
-    
+
     expect(BreakRepeatKeyXOR.new(text1, text2).hamming_distance).to eq(37)
   end
 end
