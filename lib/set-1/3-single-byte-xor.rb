@@ -7,9 +7,26 @@ class SingleByteXOR
     @char_key_arr = char_key_arr
   end
 
+  def decrypt_msg
+    possible_solutions = {}
+
+    @char_key_arr.each do |char|
+      possible_solutions[char] = build_char_score(char)
+    end
+
+    possible_solutions.sort_by { |k, v| v[0] }.reverse.first.flatten
+
+  end
+
+  private
+
+  def decode_hex(hex_str)
+    [hex_str].pack("H*")
+  end
+
   def build_char_score(possible_key)
 
-    dec_str = [@enc_hex_str].pack("H*")
+    dec_str = decode_hex(@enc_hex_str)
 
     possible_msg = ""
 
@@ -22,17 +39,6 @@ class SingleByteXOR
     end
 
     [char_frequency, possible_msg]
-  end
-
-  def decrypt_msg
-    possible_solutions = {}
-
-    @char_key_arr.each do |char|
-      possible_solutions[char] = build_char_score(char)
-    end
-
-    possible_solutions.sort_by { |k, v| v[0] }.reverse.first.flatten
-
   end
 
 end
