@@ -2,12 +2,12 @@
 
 class Hex2Base64Digest
 
-  def initialize(hex_encoded_string)
-    @enc_str = hex_encoded_string
+  def initialize(hex_string)
+    @hex_str = hex_string
   end
 
   def convert
-    [[@enc_str].pack("H*")].pack("m0")
+    [[@hex_str].pack("H*")].pack("m0")
   end
 
 end
