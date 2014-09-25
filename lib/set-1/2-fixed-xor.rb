@@ -2,24 +2,30 @@
 
 class FixedXOR
 
-  def initialize(msg_enc_hex_string, key_enc_hex_string)
-    @msg_enc_str = msg_enc_hex_string
-    @key_enc_str = key_enc_hex_string
+  def initialize(msg_hex_string, key_hex_string)
+    @msg_hex_str = msg_hex_string
+    @key_hex_str = key_hex_string
 
-    raise ArgumentError, "Strings are not of the same length!" if @msg_enc_str.length != @key_enc_str.length
+    raise ArgumentError, "Strings are not of the same length!" if @msg_hex_str.length != @key_hex_str.length
   end
 
   def encrypt_msg_with_xor
-    msg_decoded_string = [@msg_enc_str].pack("H*")
-    key_decoded_string = [@key_enc_str].pack("H*")
+    msg_bin_string = hex_to_bin(@msg_hex_str)
+    key_bin_string = hex_to_bin(@key_hex_str)
 
     xor_result =""
 
-    for i in 0..(msg_decoded_string.length-1)
-      xor_result << (msg_decoded_string[i].bytes.first ^ key_decoded_string[i].bytes.first).to_s(16)
+    for i in 0..(msg_bin_string.length-1)
+      xor_result << (msg_bin_string[i].bytes.first ^ key_bin_string[i].bytes.first).to_s(16)
     end
 
     xor_result
+  end
+
+  private
+
+  def hex_to_bin(hex_string)
+    [hex_string].pack("H*")
   end
 
 end
