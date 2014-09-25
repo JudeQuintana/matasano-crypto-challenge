@@ -1,5 +1,5 @@
 # http://cryptopals.com/sets/1/challenges/4/
-require_relative 'ch3'
+require_relative '../../lib/set-1/3-single-byte-xor'
 
 class DetectSingleCharXOR
   attr_reader :enc_hex_list_arr
