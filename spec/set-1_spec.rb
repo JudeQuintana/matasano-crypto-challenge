@@ -8,7 +8,7 @@ describe Hex2Base64Digest do
 
     expect(Hex2Base64Digest.new(hex_string).convert).to eq(base64_string)
   end
-  
+
 end
 
 describe FixedXOR do
