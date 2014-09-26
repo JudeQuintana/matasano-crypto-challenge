@@ -2,7 +2,7 @@
 require_relative '../../lib/set-1/3-single-byte-xor'
 
 class DetectSingleByteXOR
-  attr_reader :enc_hex_list_arr
+  attr_reader :hex_list_arr
 
   def initialize(hex_file_list,char_key_arr)
     @hex_list_arr = hex_file_list.split("\n")
