@@ -11,17 +11,13 @@ class RepeatingKeyXOR
     k = 0
 
     for i in 0..(@msg.length-1)
-
-      if k > @key.length-1
-        k=0
-      end
-
       #need to keep leading zero when inserting hex into string
       #this works too i just like the other better
       # encrypted_str << (@msg[i].bytes.first ^ @key[k].bytes.first).to_s(16).rjust(2,"0")
       encrypted_str << sprintf('%02x', (@msg[i].bytes.first ^ @key[k].bytes.first))
 
-      k+=1
+      k+1 > @key.length-1 ? k=0 : k+=1
+      
     end
 
     encrypted_str
