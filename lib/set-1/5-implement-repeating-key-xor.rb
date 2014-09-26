@@ -17,7 +17,7 @@ class RepeatingKeyXOR
       encrypted_str << sprintf('%02x', (@msg[i].bytes.first ^ @key[k].bytes.first))
 
       k+1 > @key.length-1 ? k=0 : k+=1
-      
+
     end
 
     encrypted_str

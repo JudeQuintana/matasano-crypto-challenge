@@ -1,7 +1,7 @@
 # http://cryptopals.com/sets/1/challenges/4/
 require_relative '../../lib/set-1/3-single-byte-xor'
 
-class DetectSingleCharXOR
+class DetectSingleByteXOR
   attr_reader :enc_hex_list_arr
 
   def initialize(hex_file_list,char_key_arr)

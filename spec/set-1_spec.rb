@@ -39,13 +39,13 @@ describe SingleByteXOR do
   end
 end
 
-describe DetectSingleCharXOR do
-  it "iterate through hex list" do
+describe DetectSingleByteXOR do
+  it "iterate through hex list and detect possible solutions" do
     hex_list_file_path = File.expand_path('../../lib/set-1/4.txt', __FILE__)
 
     potential_keys_arr = ('0'..'9').to_a
 
-    list = DetectSingleCharXOR.new(File.read(hex_list_file_path), potential_keys_arr)
+    list = DetectSingleByteXOR.new(File.read(hex_list_file_path), potential_keys_arr)
 
     solultion_hash = list.build_solution_hash
 
