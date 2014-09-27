@@ -1,5 +1,5 @@
 # http://cryptopals.com/sets/1/challenges/4/
-require_relative '../../lib/set-1/3-single-byte-xor'
+require_relative '../set-1/3-single-byte-xor'
 
 class DetectSingleByteXOR
   attr_reader :hex_list_arr

@@ -76,6 +76,56 @@ describe BreakRepeatKeyXOR do
 
     text2 = "wokka wokka!!!"
 
-    expect(BreakRepeatKeyXOR.new(text1, text2).hamming_distance).to eq(37)
+    expect(BreakRepeatKeyXOR.hamming_distance(text1, text2)).to eq(37)
+  end
+
+  it "test" do
+    require 'pp'
+    base64_file_path = File.expand_path('../../lib/set-1/6.txt', __FILE__)
+
+    base_64_file = File.read(base64_file_path).split("\n").join
+
+    # base_64_file.each do |line|
+    #   p line
+    #   puts line.length
+    # end
+
+    # pp base_64_file.length
+
+    keysize = (2..40).to_a
+
+    encrypted_hex_str = BreakRepeatKeyXOR.base64_to_hex(base_64_file)
+
+    ham_dist_hsh = {}
+
+    keysize.each do |size|
+      # puts "keysize"
+      # p size
+      # puts "ham_dist"
+      ham_dist_hsh[size] = ((BreakRepeatKeyXOR.hamming_distance(encrypted_hex_str[0..size-1], encrypted_hex_str[size..size+(size-1)])).to_f/size).round(2)
+    end
+
+    puts "top 5 smallest ham dist"
+    # pp ham_dist_hsh
+    #returns top 5 smallest hamming distances
+    pp ham_dist_hsh.sort_by { |k, v| v }[0..4]
+
+
+    #smallest hamming distance is for keysize 10
+
+    #making ciphertext blocks of keysize 5
+    # smllst_ham_dist = 4
+    #
+    # block_arr = []
+    # until encrypted_hex_str == ""
+    #   block_arr << encrypted_hex_str.slice!(0..smllst_ham_dist-1)
+    # end
+    # pp block_arr
+    #
+    # block_arr.each do |block|
+    #   puts "block length"
+    #   puts block.length
+    #
+    # end
   end
 end
