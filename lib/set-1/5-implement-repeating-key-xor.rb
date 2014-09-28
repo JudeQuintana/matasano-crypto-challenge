@@ -23,13 +23,6 @@ class RepeatingKeyXOR
     encrypted_str
   end
 
-
-  def test
-
-
-
-  end
-
 end
 
 

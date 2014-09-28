@@ -16,7 +16,7 @@ class FixedXOR
     xor_result =""
 
     for i in 0..(msg_ascii_string.length-1)
-      xor_result << (msg_ascii_string[i].bytes.first ^ key_ascii_string[i].bytes.first).to_s(16)
+      xor_result << sprintf('%02x', (msg_ascii_string[i].bytes.first ^ key_ascii_string[i].bytes.first))
     end
 
     xor_result

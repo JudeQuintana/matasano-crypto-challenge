@@ -27,4 +27,8 @@ class BreakRepeatKeyXOR
     base64_str.unpack("m0").first.unpack("H*").first
   end
 
+  def self.base64_to_ascii(base64_str)
+    base64_str.unpack("m0").first
+  end
+
 end

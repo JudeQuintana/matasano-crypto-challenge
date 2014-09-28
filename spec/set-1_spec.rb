@@ -45,7 +45,9 @@ describe DetectSingleByteXOR do
 
     potential_keys_arr = ('0'..'9').to_a
 
-    list = DetectSingleByteXOR.new(File.read(hex_list_file_path), potential_keys_arr)
+    hex_list_arr = File.read(hex_list_file_path).split("\n")
+
+    list = DetectSingleByteXOR.new(hex_list_arr, potential_keys_arr)
 
     solution_hash = list.build_solution_hash
 
@@ -81,51 +83,48 @@ describe BreakRepeatKeyXOR do
 
   it "test" do
     require 'pp'
+    require 'base64'
     base64_file_path = File.expand_path('../../lib/set-1/6.txt', __FILE__)
 
-    base_64_file = File.read(base64_file_path).split("\n").join
-
-    # base_64_file.each do |line|
-    #   p line
-    #   puts line.length
-    # end
+    base_64_file = File.read(base64_file_path)
 
     # pp base_64_file.length
 
-    keysize = (2..40).to_a
 
-    encrypted_hex_str = BreakRepeatKeyXOR.base64_to_hex(base_64_file)
+    # encrypted_hex_str = BreakRepeatKeyXOR.base64_to_hex(base_64_file)
+    # encrypted_ascii_str = base_64_file.unpack("m0").first
 
+    encrypted_ascii_str = Base64.decode64(base_64_file)
+    #     pp encrypted_ascii_str[0..1]
+    # exit!
     ham_dist_hsh = {}
+
+    keysize = (2..40).to_a
 
     keysize.each do |size|
       # puts "keysize"
       # p size
       # puts "ham_dist"
-      ham_dist_hsh[size] = ((BreakRepeatKeyXOR.hamming_distance(encrypted_hex_str[0..size-1], encrypted_hex_str[size..size+(size-1)])).to_f/size).round(2)
+      ham_dist_hsh[size] = ((BreakRepeatKeyXOR.hamming_distance(encrypted_ascii_str[0..size-1],
+                                                                encrypted_ascii_str[size..size+(size-1)]
+                                                                ))
+                                                                .to_f/size)
+                                                                .round(2)
     end
 
     puts "top 5 smallest ham dist"
     # pp ham_dist_hsh
     #returns top 5 smallest hamming distances
-    pp ham_dist_hsh.sort_by { |k, v| v }[0..4]
+    pp ham_dist_hsh.sort_by { |k, v| v }
 
-
-    #smallest hamming distance is for keysize 10
-
-    #making ciphertext blocks of keysize 5
-    # smllst_ham_dist = 4
-    #
-    # block_arr = []
-    # until encrypted_hex_str == ""
-    #   block_arr << encrypted_hex_str.slice!(0..smllst_ham_dist-1)
-    # end
-    # pp block_arr
-    #
-    # block_arr.each do |block|
-    #   puts "block length"
-    #   puts block.length
-    #
-    # end
   end
+end
+
+
+def decode_hex(hex_string)
+  [hex_string].pack("H*")
+end
+
+def encode_hex(ascii_str)
+  ascii_str.unpack("H*").first
 end
