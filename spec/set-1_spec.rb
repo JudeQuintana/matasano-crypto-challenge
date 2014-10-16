@@ -47,7 +47,7 @@ describe DetectSingleByteXOR do
 
     hex_list_arr = File.read(hex_list_file_path).split("\n")
 
-    list = DetectSingleB  yteXOR.new(hex_list_arr, potential_keys_arr)
+    list = DetectSingleByteXOR.new(hex_list_arr, potential_keys_arr)
 
     solution_arr = list.build_solution_hash
 
