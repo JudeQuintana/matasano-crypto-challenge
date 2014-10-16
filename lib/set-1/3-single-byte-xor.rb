@@ -33,7 +33,15 @@ class SingleByteXOR
     for i in 0..(dec_str.length-1)
       possible_msg << (dec_str[i].bytes.first ^ possible_key.bytes.first)
 
-      char_frequency += 1 if possible_msg[-1] =~ /[a-z]/
+      if possible_msg[-1] =~ /[a-z]/
+        char_frequency += 1
+      elsif possible_msg[-1] =~ /[ ]/
+        char_frequency += 1
+      elsif possible_msg[-1] =~ /\W/
+        char_frequency -= 1
+      elsif possible_msg[-1] =~ /\d/
+        char_frequency -= 1
+      end
     end
 
     {char_freq: char_frequency, possible_msg: possible_msg}
