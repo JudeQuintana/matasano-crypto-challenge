@@ -79,6 +79,7 @@ describe BreakRepeatKeyXOR do
     text2 = "wokka wokka!!!"
 
     expect(BreakRepeatKeyXOR.hamming_distance(text1, text2)).to eq(37)
+
   end
 
   it "test" do
@@ -88,34 +89,71 @@ describe BreakRepeatKeyXOR do
 
     base_64_file = File.read(base64_file_path)
 
-    # pp base_64_file.length
-
-
+    # pp base_64_file
     # encrypted_hex_str = BreakRepeatKeyXOR.base64_to_hex(base_64_file)
     # encrypted_ascii_str = base_64_file.unpack("m0").first
 
-    encrypted_ascii_str = Base64.decode64(base_64_file)
-    #     pp encrypted_ascii_str[0..1]
-    # exit!
-    ham_dist_hsh = {}
+    encrypted_ascii_string = Base64.decode64(base_64_file)
+    # encrypted_ascii_str = base_64_file.gsub!("\n",'').unpack("m0").first
 
-    keysize = (2..40).to_a
+    # expect(encrypted_ascii_str).to eq(encrypted_ascii_string)
 
-    keysize.each do |size|
-      # puts "keysize"
-      # p size
-      # puts "ham_dist"
-      ham_dist_hsh[size] = ((BreakRepeatKeyXOR.hamming_distance(encrypted_ascii_str[0..size-1],
-                                                                encrypted_ascii_str[size..size+(size-1)]
-                                                                ))
-                                                                .to_f/size)
-                                                                .round(2)
+    keysize = (2..40)
+
+    ham_dist = keysize.each.inject([]) do |ham_dist_arr, size|
+
+      first = ((BreakRepeatKeyXOR.hamming_distance(encrypted_ascii_string[0..size-1],
+                                                   encrypted_ascii_string[size..(size*2)-1]
+      ))
+      .to_f/size)
+      .round(2)
+
+      second = ((BreakRepeatKeyXOR.hamming_distance(encrypted_ascii_string[(size*2)..(size*3)-1],
+                                                    encrypted_ascii_string[(size*3)..(size*4)-1]
+      ))
+      .to_f/size)
+      .round(2)
+
+      ham_dist_arr << {distance: ((first + second) / 2).round(2), keysize: size}
+      ham_dist_arr
     end
 
-    puts "top 5 smallest ham dist"
-    # pp ham_dist_hsh
-    #returns top 5 smallest hamming distances
-    pp ham_dist_hsh.sort_by { |k, v| v }
+    pp ham_dist.sort_by {|metric| metric[:distance]}.first(6)
+
+    # shortest_ham_dist = ham_dist_hsh.sort_by { |k, v| v }.first[0]
+    # pp shortest_ham_dist = ham_dist_hsh.sort_by { |k, v| v }
+
+    # exit!
+
+    # enc_asc_str = encrypted_ascii_str.dup
+    # block_arr = []
+    # until encrypted_ascii_str == ""
+    #   block_arr << encrypted_ascii_str.slice!(0..(shortest_ham_dist-1))
+    # end
+    #
+    # # pp block_arr.length
+    # # exit!
+    #
+    # transposed_blocks_arr = []
+    #
+    # shortest_ham_dist.times do
+    #   tmpstr=""
+    #   block_arr.each do |block|
+    #     tmpstr << encode_hex(block.slice!(0))
+    #   end
+    #   transposed_blocks_arr << tmpstr
+    # end
+    # # pp transposed_blocks_arr
+    # # exit!
+    #
+    # pp DetectSingleByteXOR.new(transposed_blocks_arr, ("\x0".."\x7F").to_a).build_solution_hash
+    # # shortest_ham_dist.times do
+    # #
+    # #
+    # # end
+    # puts "solution?"
+    # pp decode_hex RepeatingKeyXOR.new(enc_asc_str, "oi").encrypt_msg
+
 
   end
 end
@@ -128,3 +166,7 @@ end
 def encode_hex(ascii_str)
   ascii_str.unpack("H*").first
 end
+
+# def test
+#   a.unpack('c*').zip(b.unpack('c*')).map { |x, y| hamming_dist(x, y) }.inject(:+)
+# end
