@@ -33,7 +33,7 @@ describe SingleByteXOR do
 
     potential_keys_arr = ('A'..'Z').to_a + ('a'..'z').to_a
 
-    key_letterfreq_msg = ["X", 24, "Cooking MC's like a pound of bacon"]
+    key_letterfreq_msg = {char: "X", char_freq: 24, possible_msg: "Cooking MC's like a pound of bacon"}
 
     expect(SingleByteXOR.new(hex_str, potential_keys_arr).decrypt_msg).to eq(key_letterfreq_msg)
   end
@@ -51,7 +51,7 @@ describe DetectSingleByteXOR do
 
     solution_hash = list.build_solution_hash
 
-    key_charfreq_msg = ["5", 23, "Now that the party is jumping\n"]
+    key_charfreq_msg = {char: "5", char_freq: 23, possible_msg: "Now that the party is jumping\n"}
 
     expect(solution_hash.has_value?(key_charfreq_msg)).to eq(true)
   end

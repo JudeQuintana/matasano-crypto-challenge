@@ -8,13 +8,11 @@ class SingleByteXOR
   end
 
   def decrypt_msg
-    possible_solutions = {}
 
-    @char_key_arr.each do |char|
-      possible_solutions[char] = build_char_score(char)
-    end
-
-    possible_solutions.sort_by { |k, v| v[0] }.reverse.first.flatten
+    @char_key_arr.each.inject([]) do |possible_solutions, char|
+      possible_solutions << {char: char}.merge(build_char_score(char))
+      possible_solutions
+    end.sort_by { |solution| solution[:char_freq] }.reverse.first
 
   end
 
@@ -38,7 +36,7 @@ class SingleByteXOR
       char_frequency += 1 if possible_msg[-1] =~ /[a-z]/
     end
 
-    [char_frequency, possible_msg]
+    {char_freq: char_frequency, possible_msg: possible_msg}
   end
 
 end
