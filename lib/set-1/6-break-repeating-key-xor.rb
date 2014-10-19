@@ -17,19 +17,17 @@ class BreakRepeatKeyXOR
 
   def build_key(transposed_arr)
 
-    key = ""
-    transposed_arr.each do |block|
+    transposed_arr.each.inject("") do |key, block|
       result = DetectSingleByteXOR.new([block], ("\x0".."\x7F").to_a).build_solution_hash
       key << result[0][:char]
+      key
     end
-    key
 
   end
 
   def transpose_arr(block_arr, keysize)
-    transposed_blocks_arr = []
 
-    keysize.times do
+    keysize.times.inject([]) do |transposed_blocks_arr|
       tmpstr=""
       block_arr.each do |block|
         unless block[0] == nil
@@ -37,8 +35,8 @@ class BreakRepeatKeyXOR
         end
       end
       transposed_blocks_arr << tmpstr
+      transposed_blocks_arr
     end
-    transposed_blocks_arr
 
   end
 
@@ -53,7 +51,7 @@ class BreakRepeatKeyXOR
 
   def find_keysize
 
-    keysize_range.each.inject([]) do |ham_dist_arr, size|
+    @keysize = keysize_range.each.inject([]) do |ham_dist_arr, size|
 
 
       first = ((hamming_distance(encrypted_ascii_string[0..size-1],
