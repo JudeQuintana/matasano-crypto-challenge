@@ -87,8 +87,6 @@ describe BreakRepeatKeyXOR do
 
     keysize = decipher.find_keysize
 
-    expect(keysize).to eq(29)
-
     block_arr = decipher.build_arr_from_keysize(keysize)
 
     transposed_arr = decipher.transpose_arr(block_arr,keysize)
