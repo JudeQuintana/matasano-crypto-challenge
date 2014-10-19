@@ -39,8 +39,8 @@ class SingleByteXOR
         char_frequency += 1
       elsif possible_msg[-1] =~ /\W/
         char_frequency -= 1
-      elsif possible_msg[-1] =~ /\d/
-        char_frequency -= 1
+      # elsif possible_msg[-1] =~ /\d/
+      #   char_frequency -= 1
       end
     end
 

@@ -23,6 +23,10 @@ class RepeatingKeyXOR
     encrypted_str
   end
 
+  def decrypt_msg
+    encrypt_msg
+  end
+
 end
 
 
