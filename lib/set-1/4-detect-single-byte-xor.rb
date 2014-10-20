@@ -13,7 +13,7 @@ class DetectSingleByteXOR
     @hex_list_arr.each.inject([]) do |solution_list, hex|
       solution_list << SingleByteXOR.new(hex, @char_key_arr).decrypt_msg
       solution_list
-    end
+    end.sort_by { |sol| sol[:char_freq]}.reverse
 
   end
 

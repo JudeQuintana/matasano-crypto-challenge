@@ -50,7 +50,7 @@ describe DetectSingleByteXOR do
 
     key_charfreq_msg = {char: "5", char_freq: 27, possible_msg: "Now that the party is jumping\n"}
 
-    expect(solution_arr.include?(key_charfreq_msg)).to eq(true)
+    expect(solution_arr.first).to eq(key_charfreq_msg)
   end
 
 end
