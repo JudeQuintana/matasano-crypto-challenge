@@ -29,8 +29,6 @@ class BreakRepeatKeyXOR
     self
   end
 
-
-
   def find_keysize
 
     @keysize = keysize_range.each.inject([]) do |ham_dist_arr, size|
@@ -79,8 +77,6 @@ class BreakRepeatKeyXOR
 
     self
   end
-
-
 
   private
 
