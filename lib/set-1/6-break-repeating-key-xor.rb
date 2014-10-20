@@ -11,6 +11,10 @@ class BreakRepeatKeyXOR
     @keysize_range = keysize_range
   end
 
+  def crack
+    self.find_keysize.build_key.decrypt_msg
+  end
+
   def decrypt_msg
     decode_hex(RepeatingKeyXOR.new(encrypted_ascii_string, @key).decrypt_msg)
   end
