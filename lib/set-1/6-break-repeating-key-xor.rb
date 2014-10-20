@@ -11,43 +11,25 @@ class BreakRepeatKeyXOR
     @keysize_range = keysize_range
   end
 
-  def decrypt_msg(key)
-    decode_hex(RepeatingKeyXOR.new(encrypted_ascii_string, key).decrypt_msg)
+  def decrypt_msg
+    decode_hex(RepeatingKeyXOR.new(encrypted_ascii_string, @key).decrypt_msg)
   end
 
-  def build_key(transposed_arr)
+  def build_key
 
-    transposed_arr.each.inject("") do |key, block|
+    build_arr_from_keysize
+    transpose_arr
+
+    @key = @transposed_arr.each.inject("") do |key, block|
       result = DetectSingleByteXOR.new([block], ("\x0".."\x7F").to_a).build_solution_hash
       key << result[0][:char]
       key
     end
 
+    self
   end
 
-  def transpose_arr(block_arr, keysize)
 
-    keysize.times.inject([]) do |transposed_blocks_arr|
-      tmpstr=""
-      block_arr.each do |block|
-        unless block[0] == nil
-          tmpstr << encode_hex(block.slice!(0))
-        end
-      end
-      transposed_blocks_arr << tmpstr
-      transposed_blocks_arr
-    end
-
-  end
-
-  def build_arr_from_keysize(keysize)
-    modify_enc_ascii_str = encrypted_ascii_string.dup
-    block_arr = []
-    until modify_enc_ascii_str == ""
-      block_arr << modify_enc_ascii_str.slice!(0..(keysize-1))
-    end
-    block_arr
-  end
 
   def find_keysize
 
@@ -95,6 +77,35 @@ class BreakRepeatKeyXOR
       ham_dist_arr
     end.sort_by { |metric| metric[:distance] }.first(5)[0][:keysize]
 
+    self
+  end
+
+
+
+  private
+
+  def transpose_arr
+
+    @transposed_arr = @keysize.times.inject([]) do |transposed_blocks_arr|
+      tmpstr=""
+      @block_arr.each do |block|
+        unless block[0] == nil
+          tmpstr << encode_hex(block.slice!(0))
+        end
+      end
+      transposed_blocks_arr << tmpstr
+      transposed_blocks_arr
+    end
+
+  end
+
+  def build_arr_from_keysize
+    modify_enc_ascii_str = encrypted_ascii_string.dup
+    @block_arr = []
+    until modify_enc_ascii_str == ""
+      @block_arr << modify_enc_ascii_str.slice!(0..(@keysize-1))
+    end
+    @block_arr
   end
 
   def hamming_distance(string1, string2)
@@ -112,8 +123,6 @@ class BreakRepeatKeyXOR
     ham_dist
   end
 
-  private
-
   def encode_hex(ascii_str)
     ascii_str.unpack("H*").first
   end
@@ -121,13 +130,5 @@ class BreakRepeatKeyXOR
   def decode_hex(hex_string)
     [hex_string].pack("H*")
   end
-
-  # def self.base64_to_hex(base64_str)
-  #   base64_str.unpack("m0").first.unpack("H*").first
-  # end
-  #
-  # def self.base64_to_ascii(base64_str)
-  #   base64_str.unpack("m0").first
-  # end
 
 end

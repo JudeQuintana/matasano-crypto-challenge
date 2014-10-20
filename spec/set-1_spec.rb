@@ -74,8 +74,32 @@ end
 
 describe BreakRepeatKeyXOR do
 
+  it "compute hamming distance" do
+
+    def hamming_distance(string1, string2)
+
+      ham_dist = 0
+      iter = 0
+
+      string1.length < string2.length ? shortest_length = string1.length : shortest_length = string2.length
+
+      while iter < shortest_length
+        ham_dist += (string1[iter].bytes.first ^ string2[iter].bytes.first).to_s(2).count("1")
+        iter += 1
+      end
+
+      ham_dist
+    end
+
+    text1 = "this is a test"
+
+    text2 = "wokka wokka!!!"
+
+    expect(hamming_distance(text1, text2)).to eq(37)
+
+  end
+
   it "breaks repeating key xor" do
-    require 'pp'
 
     base64_file_path = File.expand_path('../../lib/set-1/6.txt', __FILE__)
 
@@ -85,112 +109,8 @@ describe BreakRepeatKeyXOR do
 
     decipher = BreakRepeatKeyXOR.new(base_64_file, guessed_keysize_range)
 
-    keysize = decipher.find_keysize
+    expect(decipher.find_keysize.build_key.decrypt_msg).to eq("I'm back and I'm ringin' the bell \nA rockin' on the mike while the fly girls yell \nIn ecstasy in the back of me \nWell that's my DJ Deshay cuttin' all them Z's \nHittin' hard and the girlies goin' crazy \nVanilla's on the mike, man I'm not lazy. \n\nI'm lettin' my drug kick in \nIt controls my mouth and I begin \nTo just let it flow, let my concepts go \nMy posse's to the side yellin', Go Vanilla Go! \n\nSmooth 'cause that's the way I will be \nAnd if you don't give a damn, then \nWhy you starin' at me \nSo get off 'cause I control the stage \nThere's no dissin' allowed \nI'm in my own phase \nThe girlies sa y they love me and that is ok \nAnd I can dance better than any kid n' play \n\nStage 2 -- Yea the one ya' wanna listen to \nIt's off my head so let the beat play through \nSo I can funk it up and make it sound good \n1-2-3 Yo -- Knock on some wood \nFor good luck, I like my rhymes atrocious \nSupercalafragilisticexpialidocious \nI'm an effect and that you can bet \nI can take a fly girl and make her wet. \n\nI'm like Samson -- Samson to Delilah \nThere's no denyin', You can try to hang \nBut you'll keep tryin' to get my style \nOver and over, practice makes perfect \nBut not if you're a loafer. \n\nYou'll get nowhere, no place, no time, no girls \nSoon -- Oh my God, homebody, you probably eat \nSpaghetti with a spoon! Come on and say it! \n\nVIP. Vanilla Ice yep, yep, I'm comin' hard like a rhino \nIntoxicating so you stagger like a wino \nSo punks stop trying and girl stop cryin' \nVanilla Ice is sellin' and you people are buyin' \n'Cause why the freaks are jockin' like Crazy Glue \nMovin' and groovin' trying to sing along \nAll through the ghetto groovin' this here song \nNow you're amazed by the VIP posse. \n\nSteppin' so hard like a German Nazi \nStartled by the bases hittin' ground \nThere's no trippin' on mine, I'm just gettin' down \nSparkamatic, I'm hangin' tight like a fanatic \nYou trapped me once and I thought that \nYou might have it \nSo step down and lend me your ear \n'89 in my time! You, '90 is my year. \n\nYou're weakenin' fast, YO! and I can tell it \nYour body's gettin' hot, so, so I can smell it \nSo don't be mad and don't be sad \n'Cause the lyrics belong to ICE, You can call me Dad \nYou're pitchin' a fit, so step back and endure \nLet the witch doctor, Ice, do the dance to cure \nSo come up close and don't be square \nYou wanna battle me -- Anytime, anywhere \n\nYou thought that I was weak, Boy, you're dead wrong \nSo come on, everybody and sing this song \n\nSay -- Play that funky music Say, go white boy, go white boy go \nplay that funky music Go white boy, go white boy, go \nLay down and boogie and play that funky music till you die. \n\nPlay that funky music Come on, Come on, let me hear \nPlay that funky music white boy you say it, say it \nPlay that funky music A little louder now \nPlay that funky music, white boy Come on, Come on, Come on \nPlay that funky music \n")
 
-    block_arr = decipher.build_arr_from_keysize(keysize)
-
-    transposed_arr = decipher.transpose_arr(block_arr,keysize)
-
-    key = decipher.build_key(transposed_arr)
-
-    expect(decipher.decrypt_msg(key)).to eq("I'm back and I'm ringin' the bell \nA rockin' on the mike while the fly girls yell \nIn ecstasy in the back of me \nWell that's my DJ Deshay cuttin' all them Z's \nHittin' hard and the girlies goin' crazy \nVanilla's on the mike, man I'm not lazy. \n\nI'm lettin' my drug kick in \nIt controls my mouth and I begin \nTo just let it flow, let my concepts go \nMy posse's to the side yellin', Go Vanilla Go! \n\nSmooth 'cause that's the way I will be \nAnd if you don't give a damn, then \nWhy you starin' at me \nSo get off 'cause I control the stage \nThere's no dissin' allowed \nI'm in my own phase \nThe girlies sa y they love me and that is ok \nAnd I can dance better than any kid n' play \n\nStage 2 -- Yea the one ya' wanna listen to \nIt's off my head so let the beat play through \nSo I can funk it up and make it sound good \n1-2-3 Yo -- Knock on some wood \nFor good luck, I like my rhymes atrocious \nSupercalafragilisticexpialidocious \nI'm an effect and that you can bet \nI can take a fly girl and make her wet. \n\nI'm like Samson -- Samson to Delilah \nThere's no denyin', You can try to hang \nBut you'll keep tryin' to get my style \nOver and over, practice makes perfect \nBut not if you're a loafer. \n\nYou'll get nowhere, no place, no time, no girls \nSoon -- Oh my God, homebody, you probably eat \nSpaghetti with a spoon! Come on and say it! \n\nVIP. Vanilla Ice yep, yep, I'm comin' hard like a rhino \nIntoxicating so you stagger like a wino \nSo punks stop trying and girl stop cryin' \nVanilla Ice is sellin' and you people are buyin' \n'Cause why the freaks are jockin' like Crazy Glue \nMovin' and groovin' trying to sing along \nAll through the ghetto groovin' this here song \nNow you're amazed by the VIP posse. \n\nSteppin' so hard like a German Nazi \nStartled by the bases hittin' ground \nThere's no trippin' on mine, I'm just gettin' down \nSparkamatic, I'm hangin' tight like a fanatic \nYou trapped me once and I thought that \nYou might have it \nSo step down and lend me your ear \n'89 in my time! You, '90 is my year. \n\nYou're weakenin' fast, YO! and I can tell it \nYour body's gettin' hot, so, so I can smell it \nSo don't be mad and don't be sad \n'Cause the lyrics belong to ICE, You can call me Dad \nYou're pitchin' a fit, so step back and endure \nLet the witch doctor, Ice, do the dance to cure \nSo come up close and don't be square \nYou wanna battle me -- Anytime, anywhere \n\nYou thought that I was weak, Boy, you're dead wrong \nSo come on, everybody and sing this song \n\nSay -- Play that funky music Say, go white boy, go white boy go \nplay that funky music Go white boy, go white boy, go \nLay down and boogie and play that funky music till you die. \n\nPlay that funky music Come on, Come on, let me hear \nPlay that funky music white boy you say it, say it \nPlay that funky music A little louder now \nPlay that funky music, white boy Come on, Come on, Come on \nPlay that funky music \n")
-
-  end
-
-  it "compute hamming distance" do
-    skip
-    text1 = "this is a test"
-
-    text2 = "wokka wokka!!!"
-
-    # expect(BreakRepeatKeyXOR.new.hamming_distance(text1, text2)).to eq(37)
-
-  end
-
-  it "test" do
-    skip
-    require 'pp'
-    require 'base64'
-    base64_file_path = File.expand_path('../../lib/set-1/6.txt', __FILE__)
-
-    base_64_file = File.read(base64_file_path)
-
-    encrypted_ascii_string = Base64.decode64(base_64_file)
-
-    keysize = (2..40)
-
-    ham_dist = keysize.each.inject([]) do |ham_dist_arr, size|
-
-
-      first = ((BreakRepeatKeyXOR.hamming_distance(encrypted_ascii_string[0..size-1],
-                                                   encrypted_ascii_string[size..(size*2)-1]
-      ))
-      .to_f/size)
-      .round(2)
-
-      second = ((BreakRepeatKeyXOR.hamming_distance(encrypted_ascii_string[(size*2)..(size*3)-1],
-                                                    encrypted_ascii_string[(size*3)..(size*4)-1]
-      ))
-      .to_f/size)
-      .round(2)
-
-      third = ((BreakRepeatKeyXOR.hamming_distance(encrypted_ascii_string[(size*4)..(size*5)-1],
-                                                   encrypted_ascii_string[(size*5)..(size*6)-1]
-      ))
-      .to_f/size)
-      .round(2)
-
-      fourth = ((BreakRepeatKeyXOR.hamming_distance(encrypted_ascii_string[(size*6)..(size*7)-1],
-                                                    encrypted_ascii_string[(size*7)..(size*8)-1]
-      ))
-      .to_f/size)
-      .round(2)
-
-      fifth = ((BreakRepeatKeyXOR.hamming_distance(encrypted_ascii_string[(size*8)..(size*9)-1],
-                                                   encrypted_ascii_string[(size*9)..(size*10)-1]
-      ))
-      .to_f/size)
-      .round(2)
-
-      sixth = ((BreakRepeatKeyXOR.hamming_distance(encrypted_ascii_string[(size*10)..(size*11)-1],
-                                                   encrypted_ascii_string[(size*11)..(size*12)-1]
-      ))
-      .to_f/size)
-      .round(2)
-
-
-      ham_dist_arr << {distance: ((first + second + third + fourth + fifth + sixth) / 6).round(2), keysize: size}
-      ham_dist_arr
-    end
-
-    shortest_ham_dist = ham_dist.sort_by { |metric| metric[:distance] }.first(5)[0][:keysize]
-
-    enc_asc_str = encrypted_ascii_string.dup
-    block_arr = []
-    until encrypted_ascii_string == ""
-      block_arr << encrypted_ascii_string.slice!(0..(shortest_ham_dist-1))
-    end
-
-    transposed_blocks_arr = []
-
-    shortest_ham_dist.times do
-      tmpstr=""
-      block_arr.each do |block|
-        unless block[0] == nil
-          tmpstr << encode_hex(block.slice!(0))
-        end
-      end
-      transposed_blocks_arr << tmpstr
-    end
-
-    key = ""
-
-    transposed_blocks_arr.each do |block|
-      result = DetectSingleByteXOR.new([block], ("\x0".."\x7F").to_a).build_solution_hash
-      key << result[0][:char]
-    end
-puts key
-    puts decode_hex RepeatingKeyXOR.new(enc_asc_str, key).encrypt_msg
   end
 end
 
