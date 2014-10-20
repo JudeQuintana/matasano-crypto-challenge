@@ -20,12 +20,11 @@ class BreakRepeatKeyXOR
   end
 
   def build_key
-
     build_arr_from_keysize
     transpose_arr
 
     @key = @transposed_arr.each.inject("") do |key, block|
-      result = DetectSingleByteXOR.new([block], ("\x0".."\x7F").to_a).build_solution_hash
+      result = DetectSingleByteXOR.new([block], ("\x0".."\x7F")).build_solution_hash
       key << result[0][:char]
       key
     end
@@ -34,7 +33,6 @@ class BreakRepeatKeyXOR
   end
 
   def find_keysize
-
     @keysize = keysize_range.each.inject([]) do |ham_dist_arr, size|
 
       first = ((hamming_distance(encrypted_ascii_string[0..size-1],
@@ -83,7 +81,6 @@ class BreakRepeatKeyXOR
   private
 
   def transpose_arr
-
     @transposed_arr = @keysize.times.inject([]) do |transposed_blocks_arr|
       tmpstr=""
       @block_arr.each do |block|
@@ -94,12 +91,12 @@ class BreakRepeatKeyXOR
       transposed_blocks_arr << tmpstr
       transposed_blocks_arr
     end
-
   end
 
   def build_arr_from_keysize
     modify_enc_ascii_str = encrypted_ascii_string.dup
     @block_arr = []
+
     until modify_enc_ascii_str == ""
       @block_arr << modify_enc_ascii_str.slice!(0..(@keysize-1))
     end
@@ -107,7 +104,6 @@ class BreakRepeatKeyXOR
   end
 
   def hamming_distance(string1, string2)
-
     ham_dist = 0
     iter = 0
 

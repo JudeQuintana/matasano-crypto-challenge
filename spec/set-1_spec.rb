@@ -21,7 +21,6 @@ describe FixedXOR do
 
     expect(FixedXOR.new(msg_hex_str, key_hex_str).encrypt_msg).to eq(encrypted_hex_str)
 
-    #decrypt msg
     expect(FixedXOR.new(encrypted_hex_str, key_hex_str).decrypt_msg).to eq(msg_hex_str)
   end
 
