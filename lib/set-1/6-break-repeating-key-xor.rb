@@ -37,7 +37,6 @@ class BreakRepeatKeyXOR
 
     @keysize = keysize_range.each.inject([]) do |ham_dist_arr, size|
 
-
       first = ((hamming_distance(encrypted_ascii_string[0..size-1],
                                  encrypted_ascii_string[size..(size*2)-1]
       ))
@@ -74,11 +73,10 @@ class BreakRepeatKeyXOR
       .to_f/size)
       .round(2)
 
-
       ham_dist_arr << {distance: ((first + second + third + fourth + fifth + sixth) / 6).round(2), keysize: size}
       ham_dist_arr
-    end.sort_by { |metric| metric[:distance] }.first(5)[0][:keysize]
-
+    end.sort_by { |metric| metric[:distance] }.first[:keysize]
+    
     self
   end
 
