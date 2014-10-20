@@ -24,7 +24,7 @@ class BreakRepeatKeyXOR
     transpose_arr
 
     @key = @transposed_arr.each.inject("") do |key, block|
-      result = DetectSingleByteXOR.new([block], ("\x0".."\x7F")).build_solution_hash
+      result = DetectSingleByteXOR.new([block], ("\x0".."\x7F")).build_solution_arr
       key << result[0][:char]
       key
     end

@@ -8,7 +8,7 @@ class DetectSingleByteXOR
     @char_key_arr = char_key_arr
   end
 
-  def build_solution_hash
+  def build_solution_arr
 
     @hex_list_arr.each.inject([]) do |solution_list, hex|
       solution_list << SingleByteXOR.new(hex, @char_key_arr).decrypt_msg
