@@ -76,7 +76,7 @@ class BreakRepeatKeyXOR
       ham_dist_arr << {distance: ((first + second + third + fourth + fifth + sixth) / 6).round(2), keysize: size}
       ham_dist_arr
     end.sort_by { |metric| metric[:distance] }.first[:keysize]
-    
+
     self
   end
 

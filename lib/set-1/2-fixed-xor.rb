@@ -13,13 +13,17 @@ class FixedXOR
     msg_ascii_string = decode_hex(@msg_hex_str)
     key_ascii_string = decode_hex(@key_hex_str)
 
-    xor_result =""
+    encrypted_string =""
 
     for i in 0..(msg_ascii_string.length-1)
-      xor_result << sprintf('%02x', (msg_ascii_string[i].bytes.first ^ key_ascii_string[i].bytes.first))
+      encrypted_string << sprintf('%02x', (msg_ascii_string[i].bytes.first ^ key_ascii_string[i].bytes.first))
     end
 
-    xor_result
+    encrypted_string
+  end
+
+  def decrypt_msg
+    encrypt_msg
   end
 
   private
