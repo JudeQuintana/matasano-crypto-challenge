@@ -46,11 +46,11 @@ describe DetectSingleByteXOR do
 
     hex_list_arr = File.read(hex_list_file_path).split("\n")
 
-    solution_arr = DetectSingleByteXOR.new(hex_list_arr, potential_keys_arr).build_best_solution
+    solution = DetectSingleByteXOR.new(hex_list_arr, potential_keys_arr).build_best_solution
 
     key_charfreq_msg = {char: "5", char_freq: 27, possible_msg: "Now that the party is jumping\n"}
 
-    expect(solution_arr).to eq(key_charfreq_msg)
+    expect(solution).to eq(key_charfreq_msg)
   end
 
 end
