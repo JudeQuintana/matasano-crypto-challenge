@@ -1,6 +1,6 @@
 #http://cryptopals.com/sets/1/challenges/6/
 require 'Base64'
-require_relative '../set-1/4-detect-single-byte-xor'
+require_relative '../set-1/3-single-byte-xor'
 require_relative '../set-1/5-implement-repeating-key-xor'
 
 class BreakRepeatKeyXOR
@@ -24,7 +24,7 @@ class BreakRepeatKeyXOR
     transpose_arr
 
     @key = @transposed_arr.each.inject("") do |key, block|
-      result = DetectSingleByteXOR.new([block], ("\x0".."\x7F")).build_best_solution
+      result = SingleByteXOR.new(block, ("\x0".."\x7F")).decrypt_msg
       key << result[:char]
       key
     end
