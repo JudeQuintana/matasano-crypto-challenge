@@ -8,7 +8,6 @@ describe Hex2Base64Digest do
 
     expect(Hex2Base64Digest.new(hex_string).convert).to eq(base64_string)
   end
-
 end
 
 describe FixedXOR do
@@ -23,7 +22,6 @@ describe FixedXOR do
 
     expect(FixedXOR.new(encrypted_hex_str, key_hex_str).decrypt_msg).to eq(msg_hex_str)
   end
-
 end
 
 describe SingleByteXOR do
@@ -52,9 +50,7 @@ describe DetectSingleByteXOR do
 
     expect(solution).to eq(key_charfreq_msg)
   end
-
 end
-
 
 describe RepeatingKeyXOR do
   it "encrypts msg with key" do
@@ -122,7 +118,6 @@ describe BreakRepeatKeyXOR do
     expect(decipher.crack).to eq(msg)
   end
 end
-
 
 def decode_hex(hex_string)
   [hex_string].pack("H*")

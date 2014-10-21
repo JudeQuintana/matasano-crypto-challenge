@@ -26,7 +26,6 @@ class BreakRepeatKeyXOR
     @key = @transposed_arr.inject("") do |key, block|
       result = SingleByteXOR.new(block, ("\x0".."\x7F")).decrypt_msg
       key << result[:char]
-      key
     end
 
     self
