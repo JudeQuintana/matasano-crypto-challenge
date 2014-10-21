@@ -10,9 +10,9 @@ class DetectSingleByteXOR
 
   def build_best_solution
 
-    @hex_list_arr.inject([]) do |solution_list, hex|
+    @hex_list_arr.inject([]) { |solution_list, hex|
       solution_list << SingleByteXOR.new(hex, @char_key_arr).decrypt_msg
-    end.sort_by { |sol| sol[:char_freq]}.reverse.first
+    }.sort_by { |sol| sol[:char_freq]}.reverse.first
 
   end
 end

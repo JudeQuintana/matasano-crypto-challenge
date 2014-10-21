@@ -26,16 +26,16 @@ class BreakRepeatKeyXOR
     build_arr_from_keysize
     transpose_arr
 
-    @key = @transposed_arr.inject("") do |key, block|
+    @key = @transposed_arr.inject("") { |key, block|
       result = SingleByteXOR.new(block, ("\x0".."\x7F")).decrypt_msg
       key << result[:char]
-    end
+    }
 
     self
   end
 
   def find_keysize
-    @keysize = keysize_range.inject([]) do |ham_dist_arr, size|
+    @keysize = keysize_range.inject([]) { |ham_dist_arr, size|
 
       first = ((hamming_distance(encrypted_ascii_string[0..size-1],
                                  encrypted_ascii_string[size..(size*2)-1]
@@ -74,7 +74,7 @@ class BreakRepeatKeyXOR
       .round(2)
 
       ham_dist_arr << {distance: ((first + second + third + fourth + fifth + sixth) / 6).round(2), keysize: size}
-    end.sort_by { |metric| metric[:distance] }.first[:keysize]
+    }.sort_by { |metric| metric[:distance] }.first[:keysize]
 
     self
   end
@@ -82,7 +82,7 @@ class BreakRepeatKeyXOR
   private
 
   def transpose_arr
-    @transposed_arr = @keysize.times.inject([]) do |transposed_blocks_arr|
+    @transposed_arr = @keysize.times.inject([]) { |transposed_blocks_arr|
       tmpstr=""
       @block_arr.each do |block|
         unless block[0] == nil
@@ -90,7 +90,7 @@ class BreakRepeatKeyXOR
         end
       end
       transposed_blocks_arr << tmpstr
-    end
+    }
   end
 
   def build_arr_from_keysize
