@@ -62,7 +62,6 @@ describe RepeatingKeyXOR do
 
     expect(RepeatingKeyXOR.new(msg, key).encrypt_msg).to eq(encrypted_str)
   end
-
 end
 
 describe BreakRepeatKeyXOR do

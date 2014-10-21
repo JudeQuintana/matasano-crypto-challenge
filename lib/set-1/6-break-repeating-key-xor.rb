@@ -4,7 +4,7 @@ require_relative '../set-1/3-single-byte-xor'
 require_relative '../set-1/5-implement-repeating-key-xor'
 
 class BreakRepeatKeyXOR
-  attr_reader :encrypted_ascii_string, :keysize_range
+  attr_reader :encrypted_ascii_string, :keysize_range, :msg, :key
 
   def initialize(base64_file, keysize_range)
     @encrypted_ascii_string = Base64.decode64(base64_file)
@@ -12,11 +12,12 @@ class BreakRepeatKeyXOR
   end
 
   def crack
-    self.find_keysize.build_key.decrypt_msg
+    self.find_keysize.build_key.decrypt_msg.msg
   end
 
   def decrypt_msg
-    decode_hex(RepeatingKeyXOR.new(encrypted_ascii_string, @key).decrypt_msg)
+    @msg = decode_hex(RepeatingKeyXOR.new(encrypted_ascii_string, @key).decrypt_msg)
+    self
   end
 
   def build_key
