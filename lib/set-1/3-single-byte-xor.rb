@@ -9,9 +9,8 @@ class SingleByteXOR
 
   def decrypt_msg
 
-    @char_key_arr.each.inject([]) do |possible_solutions, char|
+    @char_key_arr.inject([]) do |possible_solutions, char|
       possible_solutions << {char: char}.merge(build_char_score(char))
-      possible_solutions
     end.sort_by { |solution| solution[:char_freq] }.reverse.first
 
   end
