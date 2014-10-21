@@ -26,7 +26,6 @@ class RepeatingKeyXOR
   def decrypt_msg
     encrypt_msg
   end
-
 end
 
 

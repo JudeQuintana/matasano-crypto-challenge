@@ -1,6 +1,8 @@
 # http://cryptopals.com/sets/1/challenges/3/
+require_relative '../set-1/conversion_module'
 
 class SingleByteXOR
+  include Conversion
 
   def initialize(encoded_hex_string, char_key_arr)
     @enc_hex_str = encoded_hex_string
@@ -16,10 +18,6 @@ class SingleByteXOR
   end
 
   private
-
-  def decode_hex(hex_str)
-    [hex_str].pack("H*")
-  end
 
   def build_char_score(possible_key)
 

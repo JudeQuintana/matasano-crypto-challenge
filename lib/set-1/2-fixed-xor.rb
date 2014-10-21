@@ -1,6 +1,8 @@
 # http://cryptopals.com/sets/1/challenges/2/
+require_relative '../set-1/conversion_module'
 
 class FixedXOR
+  include Conversion
 
   def initialize(msg_hex_string, key_hex_string)
     @msg_hex_str = msg_hex_string
@@ -25,11 +27,4 @@ class FixedXOR
   def decrypt_msg
     encrypt_msg
   end
-
-  private
-
-  def decode_hex(hex_string)
-    [hex_string].pack("H*")
-  end
-
 end

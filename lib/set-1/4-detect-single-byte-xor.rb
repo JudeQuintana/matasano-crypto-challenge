@@ -15,6 +15,4 @@ class DetectSingleByteXOR
     end.sort_by { |sol| sol[:char_freq]}.reverse.first
 
   end
-
-
 end

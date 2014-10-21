@@ -2,8 +2,10 @@
 require 'Base64'
 require_relative '../set-1/3-single-byte-xor'
 require_relative '../set-1/5-implement-repeating-key-xor'
+require_relative '../set-1/conversion_module'
 
 class BreakRepeatKeyXOR
+  include Conversion
   attr_reader :encrypted_ascii_string, :keysize_range, :msg, :key
 
   def initialize(base64_file, keysize_range)
@@ -112,14 +114,6 @@ class BreakRepeatKeyXOR
     end
 
     ham_dist
-  end
-
-  def encode_hex(ascii_str)
-    ascii_str.unpack("H*").first
-  end
-
-  def decode_hex(hex_string)
-    [hex_string].pack("H*")
   end
 
 end
