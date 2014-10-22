@@ -1,5 +1,5 @@
 # http://cryptopals.com/sets/1/challenges/3/
-require_relative '../set-1/conversion_module'
+require_relative '../set-1/modules/conversion'
 
 class SingleByteXOR
   include Conversion

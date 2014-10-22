@@ -2,7 +2,7 @@
 require 'Base64'
 require_relative '../set-1/3-single-byte-xor'
 require_relative '../set-1/5-implement-repeating-key-xor'
-require_relative '../set-1/conversion_module'
+require_relative '../set-1/modules/conversion'
 
 class BreakRepeatKeyXOR
   include Conversion
