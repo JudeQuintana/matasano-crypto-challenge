@@ -18,10 +18,10 @@ class FixedXOR
     encrypted_string =""
 
     for i in 0..(msg_ascii_string.length-1)
-      encrypted_string << sprintf('%02x', (msg_ascii_string[i].bytes.first ^ key_ascii_string[i].bytes.first))
+      encrypted_string << (msg_ascii_string[i].bytes.first ^ key_ascii_string[i].bytes.first)
     end
 
-    encrypted_string
+    encode_hex(encrypted_string)
   end
 
   def decrypt_msg
