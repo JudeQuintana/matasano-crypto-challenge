@@ -23,14 +23,9 @@ class BreakRepeatKeyXOR
   end
 
   def build_key
-    build_arr_from_keysize
+    build_block_arr_from_keysize
     transpose_arr
-
-    @key = @transposed_arr.inject("") { |key, block|
-      result = SingleByteXOR.new(block, ("\x0".."\x7F")).decrypt_msg
-      key << result[:char]
-    }
-
+    extract_key
     self
   end
 
@@ -93,8 +88,15 @@ class BreakRepeatKeyXOR
     }
   end
 
-  def build_arr_from_keysize
+  def build_block_arr_from_keysize
     @block_arr = encrypted_ascii_string.scan(/[\w\W]{1,#{@keysize}}/)
+  end
+
+  def extract_key
+    @key = @transposed_arr.inject("") { |key, block|
+      result = SingleByteXOR.new(block, ("\x0".."\x7F")).decrypt_msg
+      key << result[:char]
+    }
   end
 
   def hamming_distance(string1, string2)
