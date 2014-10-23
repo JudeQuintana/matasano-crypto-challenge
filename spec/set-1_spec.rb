@@ -117,5 +117,7 @@ describe BreakRepeatKeyXOR  do
 
     expect(decipher.crack).to eq(msg)
   end
+
+
 end
 

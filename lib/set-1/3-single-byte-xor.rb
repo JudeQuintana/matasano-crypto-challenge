@@ -11,7 +11,7 @@ class SingleByteXOR
 
   def decrypt_msg
 
-    @char_key_arr.inject([]) { |possible_solutions, char|
+    @char_key_arr.each_with_object([]) { |char, possible_solutions|
       possible_solutions << {char: char}.merge(build_char_score(char))
       }.sort_by { |solution| solution[:char_freq] }.reverse.first
 
