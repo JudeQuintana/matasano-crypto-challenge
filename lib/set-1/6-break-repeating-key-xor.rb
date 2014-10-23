@@ -94,12 +94,7 @@ class BreakRepeatKeyXOR
   end
 
   def build_arr_from_keysize
-    modify_enc_ascii_str = encrypted_ascii_string.dup
-    @block_arr = []
-
-    until modify_enc_ascii_str == ""
-      @block_arr << modify_enc_ascii_str.slice!(0..(@keysize-1))
-    end
+    @block_arr = encrypted_ascii_string.scan(/[\w\W]{1,#{@keysize}}/)
   end
 
   def hamming_distance(string1, string2)
