@@ -66,9 +66,7 @@ class BreakRepeatKeyXOR
     @transposed_arr = @keysize.times.each_with_object([]) { |_, transposed_blocks_arr|
       tmpstr=""
       @block_arr.each do |block|
-        if block[0]
-          tmpstr << encode_hex(block.slice!(0))
-        end
+        tmpstr << encode_hex(block.slice!(0)) if block[0]
       end
       transposed_blocks_arr << tmpstr
     }
