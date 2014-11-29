@@ -1,4 +1,12 @@
 require 'spec_helper'
+require_relative '../lib/set-1/1-hex-to-base64'
+require_relative '../lib/set-1/2-fixed-xor'
+require_relative '../lib/set-1/3-single-byte-xor'
+require_relative '../lib/set-1/4-detect-single-byte-xor'
+require_relative '../lib/set-1/5-implement-repeating-key-xor'
+require_relative '../lib/set-1/6-break-repeating-key-xor'
+require_relative '../lib/set-1/7-AES-in-ECB-mode'
+require_relative '../lib/set-1/8-Detect-AES-in-ECB-mode'
 
 describe Hex2Base64Digest do
   it "hex encoded string should produce a base64 string" do

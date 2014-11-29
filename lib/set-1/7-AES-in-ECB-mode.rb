@@ -16,5 +16,4 @@ class AESinECB
     cipher.update(@content) + cipher.final
   end
 
-
 end
