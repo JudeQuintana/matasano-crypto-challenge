@@ -87,13 +87,9 @@ class BreakRepeatKeyXOR
 
   def hamming_distance(arr1, arr2)
     ham_dist = 0
-    iter = 0
 
-    arr1.length < arr2.length ? shortest_length = arr1.length : shortest_length = arr2.length
-
-    while iter < shortest_length
-      ham_dist += (arr1[iter] ^ arr2[iter]).to_s(2).count("1")
-      iter += 1
+    for i in 0..arr1.length-1 #arr1 and arr2 will always be same length
+      ham_dist += (arr1[i] ^ arr2[i]).to_s(2).count("1")
     end
 
     ham_dist.to_f
@@ -102,6 +98,5 @@ class BreakRepeatKeyXOR
   def average_distances(distance_arr)
     distance_arr.inject(:+)/distance_arr.length
   end
-
 
 end
