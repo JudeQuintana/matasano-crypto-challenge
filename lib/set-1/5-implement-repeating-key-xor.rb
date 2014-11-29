@@ -5,8 +5,8 @@ class RepeatingKeyXOR
   include Conversion
 
   def initialize(msg,key)
-    @msg = msg
-    @key = key
+    @msg = msg.bytes
+    @key = key.bytes
   end
 
   def encrypt_msg
@@ -14,7 +14,7 @@ class RepeatingKeyXOR
     k = 0
 
     for i in 0..(@msg.length-1)
-      encrypted_str <<  (@msg[i].bytes.first ^ @key[k].bytes.first)
+      encrypted_str <<  (@msg[i] ^ @key[k])
       k+1 > @key.length-1 ? k=0 : k+=1
     end
 
