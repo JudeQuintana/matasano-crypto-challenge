@@ -30,8 +30,7 @@ class BreakRepeatKeyXOR
 
   def find_keysize
 
-    cipher_text_in_bytes = cipher_text.bytes
-    cipher_length = cipher_text_in_bytes.length
+    cipher_length = cipher_text.length
 
     @keysize = keysize_range.each_with_object([]) { |keysize, ham_dist_arr|
 
@@ -44,10 +43,10 @@ class BreakRepeatKeyXOR
 
       until (start_index + offset) > cipher_length
 
-        first = cipher_text_in_bytes[start_index...start_index + keysize]
-        second = cipher_text_in_bytes[start_index + keysize...start_index + offset]
+        first = cipher_text[start_index...start_index + keysize]
+        second = cipher_text[start_index + keysize...start_index + offset]
 
-        distance_arr << (hamming_distance(first, second) / keysize)
+        distance_arr << (hamming_distance(first.bytes, second.bytes) / keysize)
 
         start_index += offset
       end
