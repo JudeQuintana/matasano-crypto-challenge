@@ -46,7 +46,7 @@ class BreakRepeatKeyXOR
         first = cipher_text[start_index...start_index + keysize]
         second = cipher_text[start_index + keysize...start_index + offset]
 
-        distance_arr << (hamming_distance(first.bytes, second.bytes) / keysize)
+        distance_arr << (hamming_distance(first, second) / keysize)
 
         start_index += offset
       end
@@ -85,7 +85,11 @@ class BreakRepeatKeyXOR
     }
   end
 
-  def hamming_distance(arr1, arr2)
+  def hamming_distance(str1, str2)
+
+    arr1 = str1.bytes
+    arr2 = str2.bytes
+
     ham_dist = 0
 
     for i in 0..arr1.length-1 #arr1 and arr2 will always be same length
