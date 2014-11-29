@@ -1,5 +1,5 @@
 # http://cryptopals.com/sets/1/challenges/5/
-require_relative '../set-1/modules/conversion'
+require_relative '../modules/conversion'
 
 class RepeatingKeyXOR
   include Conversion

@@ -1,4 +1,4 @@
-require_relative '../set-1/modules/conversion'
+require_relative '../modules/conversion'
 
 class DetectAESinECB
   include Conversion

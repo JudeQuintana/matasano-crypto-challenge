@@ -1,7 +1,7 @@
 #http://cryptopals.com/sets/1/challenges/6/
 require_relative '../set-1/3-single-byte-xor'
 require_relative '../set-1/5-implement-repeating-key-xor'
-require_relative '../set-1/modules/conversion'
+require_relative '../modules/conversion'
 
 class BreakRepeatKeyXOR
   include Conversion

@@ -1,5 +1,5 @@
 # http://cryptopals.com/sets/1/challenges/2/
-require_relative '../set-1/modules/conversion'
+require_relative '../modules/conversion'
 
 class FixedXOR
   include Conversion
