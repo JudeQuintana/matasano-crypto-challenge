@@ -1,3 +1,5 @@
+require 'Base64'
+
 module Conversion
 
   def decode_hex(hex_string)
@@ -17,7 +19,7 @@ module Conversion
   end
 
   def base64_to_ascii(base64_str)
-    base64_str.unpack("m0").first
+    Base64.decode64(base64_str)
   end
 
 end

@@ -1,15 +1,14 @@
 #http://cryptopals.com/sets/1/challenges/6/
-require 'Base64'
 require_relative '../set-1/3-single-byte-xor'
 require_relative '../set-1/5-implement-repeating-key-xor'
 require_relative '../set-1/modules/conversion'
 
 class BreakRepeatKeyXOR
   include Conversion
-  attr_reader :encrypted_ascii_string, :keysize_range, :msg, :key
+  attr_reader :cipher_text, :keysize_range, :msg, :key
 
   def initialize(base64_file, keysize_range)
-    @encrypted_ascii_string = Base64.decode64(base64_file)
+    @cipher_text = base64_to_ascii(base64_file)
     @keysize_range = keysize_range
   end
 
@@ -18,7 +17,7 @@ class BreakRepeatKeyXOR
   end
 
   def decrypt_msg
-    @msg = decode_hex(RepeatingKeyXOR.new(encrypted_ascii_string, @key).decrypt_msg)
+    @msg = decode_hex(RepeatingKeyXOR.new(cipher_text, @key).decrypt_msg)
     self
   end
 
@@ -30,45 +29,33 @@ class BreakRepeatKeyXOR
   end
 
   def find_keysize
-    @keysize = keysize_range.each_with_object([]) { |size, ham_dist_arr|
 
-      first = ((hamming_distance(encrypted_ascii_string[0..size-1],
-                                 encrypted_ascii_string[size..(size*2)-1]
-      ))
-      .to_f/size)
-      .round(2)
+    cipher_text_in_bytes = cipher_text.bytes
+    cipher_length = cipher_text_in_bytes.length
 
-      second = ((hamming_distance(encrypted_ascii_string[(size*2)..(size*3)-1],
-                                  encrypted_ascii_string[(size*3)..(size*4)-1]
-      ))
-      .to_f/size)
-      .round(2)
+    @keysize = keysize_range.each_with_object([]) { |keysize, ham_dist_arr|
 
-      third = ((hamming_distance(encrypted_ascii_string[(size*4)..(size*5)-1],
-                                 encrypted_ascii_string[(size*5)..(size*6)-1]
-      ))
-      .to_f/size)
-      .round(2)
+      start_index = 0
+      offset = keysize * 2
 
-      fourth = ((hamming_distance(encrypted_ascii_string[(size*6)..(size*7)-1],
-                                  encrypted_ascii_string[(size*7)..(size*8)-1]
-      ))
-      .to_f/size)
-      .round(2)
+      next if offset > cipher_length
 
-      fifth = ((hamming_distance(encrypted_ascii_string[(size*8)..(size*9)-1],
-                                 encrypted_ascii_string[(size*9)..(size*10)-1]
-      ))
-      .to_f/size)
-      .round(2)
+      distance_arr = []
 
-      sixth = ((hamming_distance(encrypted_ascii_string[(size*10)..(size*11)-1],
-                                 encrypted_ascii_string[(size*11)..(size*12)-1]
-      ))
-      .to_f/size)
-      .round(2)
+      until (start_index + offset) > cipher_length
 
-      ham_dist_arr << {distance: ((first + second + third + fourth + fifth + sixth) / 6).round(2), keysize: size}
+        first = cipher_text_in_bytes[start_index...start_index + keysize]
+        second = cipher_text_in_bytes[start_index + keysize...start_index + offset]
+
+        distance_arr << (hamming_distance(first, second) / keysize)
+
+        start_index += offset
+      end
+
+      avg_distance = average_distances(distance_arr)
+
+      ham_dist_arr << {distance: avg_distance, keysize: keysize}
+
     }.sort_by { |metric| metric[:distance] }.first[:keysize]
 
     self
@@ -77,7 +64,7 @@ class BreakRepeatKeyXOR
   private
 
   def transpose_arr
-    @transposed_arr = @keysize.times.each_with_object([]) { |_,transposed_blocks_arr|
+    @transposed_arr = @keysize.times.each_with_object([]) { |_, transposed_blocks_arr|
       tmpstr=""
       @block_arr.each do |block|
         unless block[0] == nil
@@ -89,7 +76,7 @@ class BreakRepeatKeyXOR
   end
 
   def build_block_arr_from_keysize
-    @block_arr = encrypted_ascii_string.scan(/[\w\W]{1,#{@keysize}}/)
+    @block_arr = cipher_text.scan(/[\w\W]{1,#{@keysize}}/)
   end
 
   def extract_key
@@ -99,18 +86,23 @@ class BreakRepeatKeyXOR
     }
   end
 
-  def hamming_distance(string1, string2)
+  def hamming_distance(arr1, arr2)
     ham_dist = 0
     iter = 0
 
-    string1.length < string2.length ? shortest_length = string1.length : shortest_length = string2.length
+    arr1.length < arr2.length ? shortest_length = arr1.length : shortest_length = arr2.length
 
     while iter < shortest_length
-      ham_dist += (string1[iter].bytes.first ^ string2[iter].bytes.first).to_s(2).count("1")
+      ham_dist += (arr1[iter] ^ arr2[iter]).to_s(2).count("1")
       iter += 1
     end
 
-    ham_dist
+    ham_dist.to_f
   end
+
+  def average_distances(distance_arr)
+    distance_arr.inject(:+)/distance_arr.length
+  end
+
 
 end
