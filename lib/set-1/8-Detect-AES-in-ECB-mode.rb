@@ -7,7 +7,6 @@ class DetectAESinECB
     @hex_list_arr = hex_list_arr
   end
 
-
   def detect
     @hex_list_arr.each_with_object([]) { |hex_str, arr|
 
@@ -15,8 +14,8 @@ class DetectAESinECB
       count = bytes.each_slice(16).to_a.uniq.count
 
       arr << {count: count, hex_str: hex_str}
-      
-    }.sort_by { |metric| metric[:count]}.first[:hex_str]
+
+    }.sort_by { |metric| metric[:count] }.first[:hex_str]
   end
 
 end
