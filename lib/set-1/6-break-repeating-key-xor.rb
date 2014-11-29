@@ -7,8 +7,8 @@ class BreakRepeatKeyXOR
   include Conversion
   attr_reader :cipher_text, :keysize_range, :msg, :key
 
-  def initialize(base64_file, keysize_range)
-    @cipher_text = base64_to_ascii(base64_file)
+  def initialize(base64_str, keysize_range)
+    @cipher_text = base64_to_ascii(base64_str)
     @keysize_range = keysize_range
   end
 
