@@ -1,3 +1,4 @@
+#http://cryptopals.com/sets/1/challenges/8/
 require_relative '../modules/conversion'
 
 class DetectAESinECB

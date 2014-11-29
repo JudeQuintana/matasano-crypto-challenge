@@ -1,3 +1,4 @@
+#http://cryptopals.com/sets/1/challenges/7/
 require 'OpenSSL'
 require_relative '../modules/conversion'
 
