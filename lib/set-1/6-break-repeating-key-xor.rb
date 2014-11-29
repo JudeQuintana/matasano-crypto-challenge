@@ -41,7 +41,7 @@ class BreakRepeatKeyXOR
 
       distance_arr = []
 
-      until (start_index + offset) > cipher_length
+      while (start_index + offset) < cipher_length
 
         first = cipher_text[start_index...start_index + keysize]
         second = cipher_text[start_index + keysize...start_index + offset]
