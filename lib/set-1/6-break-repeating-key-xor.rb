@@ -41,7 +41,7 @@ class BreakRepeatKeyXOR
 
       distance_arr = []
 
-      while (start_index + offset) < cipher_length
+      while (start_index + offset) <= cipher_length
 
         first = cipher_text[start_index...start_index + keysize]
         second = cipher_text[start_index + keysize...start_index + offset]
@@ -66,7 +66,7 @@ class BreakRepeatKeyXOR
     @transposed_arr = @keysize.times.each_with_object([]) { |_, transposed_blocks_arr|
       tmpstr=""
       @block_arr.each do |block|
-        unless block[0] == nil
+        if block[0]
           tmpstr << encode_hex(block.slice!(0))
         end
       end
