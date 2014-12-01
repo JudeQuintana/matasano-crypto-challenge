@@ -15,7 +15,7 @@ class AESinECB
   def encrypt
     aes = OpenSSL::Cipher::Cipher.new(@cipher_type)
     aes.encrypt
-    aes.key = key
+    aes.key = @key
     aes.iv = iv if @iv
     aes.update(@content) + aes.final
   end
