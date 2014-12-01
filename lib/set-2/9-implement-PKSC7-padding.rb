@@ -19,8 +19,6 @@ class PKSC7padding
       num_to_pad.times {
         @padded_str << 0x0
       }
-    else
-      @padded_str
     end
 
     self
