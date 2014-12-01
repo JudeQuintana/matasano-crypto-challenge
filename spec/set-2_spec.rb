@@ -7,7 +7,7 @@ describe PKSC7padding do
 
     str = "YELLOW SUBMARINE"
 
-    expect(PKSC7padding.new(str,20).pad.padded_str).to eq(str + "\u0004\u0004\u0004\u0004")
+    expect(PKSC7padding.new(str,20).pad.padded_str).to eq(str + "\u0000\u0000\u0000\u0000")
   end
 
 end
