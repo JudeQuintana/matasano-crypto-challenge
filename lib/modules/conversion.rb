@@ -22,4 +22,8 @@ module Conversion
     Base64.decode64(base64_str)
   end
 
+  def ascii_to_base64(ascii_str)
+    Base64.encode64(ascii_str)
+  end
+
 end
