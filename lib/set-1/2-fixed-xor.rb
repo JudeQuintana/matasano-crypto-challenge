@@ -12,13 +12,13 @@ class FixedXOR
   end
 
   def encrypt_msg
-    msg_ascii_string = decode_hex(@msg_hex_str)
-    key_ascii_string = decode_hex(@key_hex_str)
+    msg_bytes = decode_hex(@msg_hex_str).bytes
+    key_bytes = decode_hex(@key_hex_str).bytes
 
     encrypted_string =""
 
-    for i in 0..(msg_ascii_string.length-1)
-      encrypted_string << (msg_ascii_string[i].bytes.first ^ key_ascii_string[i].bytes.first)
+    for i in 0..(msg_bytes.length-1)
+      encrypted_string << (msg_bytes[i] ^ key_bytes[i])
     end
 
     encode_hex(encrypted_string)
